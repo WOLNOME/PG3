@@ -2,10 +2,24 @@
 #include <iostream>
 #include <Windows.h>
 
+template <typename T>
+T Min(T a, T b) { return min(a, b); }
+template <>
+char Min<char>(char a, char b) {return ' '; }
+
 int main() {
-	SetConsoleCP(65001);
-	char str[] = "ある日　森の中　くまさんに　出会った　花咲く森の道　くまさんに　出会った";
-	printf("%s", str);
+	int a = 0;
+	int b = 1;
+	float c = 2.3f;
+	float d = 4.5f;
+	double e = 6.7;
+	double f = 8.9;
+	char g = 'a';
+	char h = 'b';
+	printf("%d\n", Min<int>(a, b));
+	printf("%f\n", Min<float>(c, d));
+	printf("%lf\n", Min<double>(e, f));
+	printf("数字以外は代入できません%c\n", Min<char>(g, h));
 
 
 	return 0;
