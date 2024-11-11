@@ -1,5 +1,16 @@
 #include <stdio.h>
-#include "Weapon.h"
+#include <iostream>
+
+class Weapon {
+public:
+    Weapon() = default;
+    virtual ~Weapon() = default;
+
+    virtual void Attack() = 0;
+
+protected:
+    const char* name;
+};
 
 class Sword : public Weapon {
 public:
