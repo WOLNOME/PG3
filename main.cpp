@@ -15,6 +15,7 @@ protected:
 class Sword : public Weapon {
 public:
     Sword() { name = "Sword"; }
+    ~Sword();
     void Attack() override {
         printf("%s attacks with a slash!\n", name);
     }
@@ -23,6 +24,7 @@ public:
 class Bow : public Weapon {
 public:
     Bow() { name = "Bow"; }
+    ~Bow();
     void Attack() override {
         printf("%s shoots an arrow!\n", name);
     }
