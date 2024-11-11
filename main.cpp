@@ -3,10 +3,12 @@
 
 class Weapon {
 public:
-    Weapon() = default;
-    virtual ~Weapon() = default;
+    Weapon() {};
+    virtual ~Weapon() {};
 
-    virtual void Attack() = 0;
+    virtual void Attack() {
+        printf("%s で攻撃\n", name);
+    };
 
 protected:
     const char* name;
@@ -14,20 +16,12 @@ protected:
 
 class Sword : public Weapon {
 public:
-    Sword() { name = "Sword"; }
-    ~Sword();
-    void Attack() override {
-        printf("%s attacks with a slash!\n", name);
-    }
+    Sword() { name = "剣"; }
 };
 
 class Bow : public Weapon {
 public:
-    Bow() { name = "Bow"; }
-    ~Bow();
-    void Attack() override {
-        printf("%s shoots an arrow!\n", name);
-    }
+    Bow() { name = "弓"; }
 };
 
 int main() {
@@ -41,3 +35,5 @@ int main() {
     delete bow;
     return 0;
 }
+
+
