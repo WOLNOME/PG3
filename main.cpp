@@ -1,37 +1,30 @@
 #include <stdio.h>
-#include <iostream>
-#include <Windows.h>
+#include "Weapon.h"
 
-template <typename T>
-class Comparison
-{
+class Sword : public Weapon {
 public:
-	T s1;
-	T s2;
+    Sword() { name = "Sword"; }
+    void Attack() override {
+        printf("%s attacks with a slash!\n", name);
+    }
+};
 
-	Comparison(T s1, T s2) : s1(s1), s2(s2) {}
-
-	T Min() {
-		if (s1 < s2) {
-			return s1;
-		}
-		else {
-			return s2;
-		}
-	}
-
+class Bow : public Weapon {
+public:
+    Bow() { name = "Bow"; }
+    void Attack() override {
+        printf("%s shoots an arrow!\n", name);
+    }
 };
 
 int main() {
-	//数値定義
-	Comparison<int> c1(10, 20);
-	Comparison<float> c2(3.3f, 4.0f);
-	Comparison<double> c3(1.2, 3.4);
+    Weapon* sword = new Sword();
+    Weapon* bow = new Bow();
 
-	//出力
-	printf("int : %d\n", c1.Min());
-	printf("float : %f\n", c2.Min());
-	printf("double : %lf\n", c3.Min());
+    sword->Attack(); 
+    bow->Attack();  
 
-	return 0;
+    delete sword;
+    delete bow;
+    return 0;
 }
