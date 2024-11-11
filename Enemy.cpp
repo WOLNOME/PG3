@@ -1,6 +1,12 @@
 #include "Enemy.h"
 #include "stdio.h"
 
+void (Enemy::* Enemy::functionTable[])() = {
+	&Enemy::Approach,
+	&Enemy::Shooting,
+	&Enemy::Withdrawal
+};
+
 void Enemy::Approach()
 {
 	//接近コメント
@@ -22,11 +28,10 @@ void Enemy::Withdrawal()
 void Enemy::Update()
 {
 	//現在フェーズの関数を実行
+	for (int phase = 0; phase < 3; phase++) {
+		(this->*functionTable[static_cast<size_t>(phase)])();
+	}
 
 }
 
-void (Enemy::* Enemy::functionTable[])() = {
-	&Enemy::Approach,
-	&Enemy::Shooting,
-	&Enemy::Withdrawal
-};
+
