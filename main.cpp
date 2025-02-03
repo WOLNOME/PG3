@@ -1,55 +1,61 @@
 #include <stdio.h>
-#include <iostream>
 #include <Windows.h>
+#include <random>
 
-int RecursionNowTime(int recursion, int time) {
-	if (time == 1) {
-		return recursion;
-	}
-	else {
-		time--;
-		return RecursionNowTime(recursion * 2 - 50, time);
-	}
+typedef void (*PFunc)();
+
+//コールバック関数
+void DispResult() {
+	printf("抽選結果が出ました\n");
 }
 
-int RecursionTotal(int recursion, int time) {
-	int total = 0;
-	if (time == 1) {
-		total = recursion;
+void setTimeout(PFunc p, int second) {
+	Sleep(second * 1000);
+
+	p();
+}
+
+//サイコロ降る関数
+int DiceRoller() {
+	std::random_device rd;
+	std::mt19937 gen(rd());
+	std::uniform_int_distribution<int> dist(1, 6);
+
+	return dist(gen);
+}
+
+
+int main(void) {
+	printf("サイコロをふります。\n");
+	printf("出目が奇数か偶数か当ててください。\n");
+	printf("奇数なら'1'、偶数なら'2'を入力してください。\n");
+	int a;
+	scanf_s("%d", &a);
+	bool b = false;
+	if (a < 1 || a > 2) {
+		b = true;
+		printf("正しくない値が入力されました。やり直してください。\n");
 	}
-	else {
-		for (int i = time; i > 0; --i) {
-			total += RecursionNowTime(recursion, i);
+
+	if (!b) {
+		//サイコロの出目をランダムに出力
+		int roll = DiceRoller();
+
+		printf("抽選中・・・\n");
+
+		PFunc p;
+		p = DispResult;
+		setTimeout(p, 3);
+
+		printf("抽選結果は%dでした！\n", roll);
+
+		if ((roll % 2 == 0 && a == 2) || (roll % 2 == 1 && a == 1)) {
+			printf("おめでとうございます！\n");
+		}
+		else if ((roll % 2 == 0 && a == 1) || (roll % 2 == 1 && a == 2)) {
+			printf("残念でした・・・\n");
 		}
 	}
-	return total;
-}
-
-void Recursive(int general, int recursion, int time) {
-	//時間をインクリメント
-	time++;
-
-	//現在時間の給与比較
-	printf("----------------------------\n");
-	printf("現在時間 : %d\n", time);
-	printf("一般時間給与 : %d\n", general);
-	printf("一般合計給与 : %d\n", general * time);
-	printf("再帰時間給与 : %d\n", RecursionNowTime(recursion, time));
-	printf("再帰合計給与 : %d\n", RecursionTotal(recursion, time));
-	printf("----------------------------\n");
-	//再帰合計給与が一般合計給与を下回るなら測定継続
-	if (RecursionTotal(recursion, time) < general * time) {
-		Recursive(general, recursion, time);
-	}
-}
-
-int main() {
-	//初期値
-	int general = 1072;
-	int recursion = 100;
-	int time = 0;
-
-	Recursive(general, recursion, time);
 
 	return 0;
 }
