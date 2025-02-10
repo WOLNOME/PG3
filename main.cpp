@@ -10,8 +10,7 @@ condition_variable cv;
 bool thread1_done = false, thread2_done = false;
 
 void threadOne() {
-    this_thread::sleep_for(chrono::milliseconds(500));
-    cout << "thread1\n";
+    printf("thread1\n");
 
     // thread2 を動かす
     unique_lock<mutex> lock(mtx);
@@ -22,7 +21,7 @@ void threadOne() {
 void threadTwo() {
     unique_lock<mutex> lock(mtx);
     cv.wait(lock, [] { return thread1_done; });
-    cout << "thread2\n";
+    printf("thread2\n");
 
     // thread3 を動かす
     thread2_done = true;
@@ -32,7 +31,7 @@ void threadTwo() {
 void threadThree() {
     unique_lock<mutex> lock(mtx);
     cv.wait(lock, [] { return thread2_done; });
-    cout << "thread3\n";
+    printf("thread3\n");
 }
 
 int main() {
