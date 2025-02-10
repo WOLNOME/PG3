@@ -16,12 +16,12 @@ int main() {
 		};
 
 	thread th1(threadOne);
-	th1.join();
 	thread th2(threadTwo);
-	th2.join();
 	thread th3(threadThree);
-	th3.join();
 
+	th1.join();
+	th2.join();
+	th3.join();
 
 	return 0;
 }
